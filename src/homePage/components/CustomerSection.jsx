@@ -21,6 +21,12 @@ const REVIEWS = [
     role: "Designer", 
     img: "images/homepage/customer/image-1.png", 
     text: "Exceptional experience! I've tried many others, but this one stands out for its attention to detail." 
+  },
+  { 
+    name: "Michael.", 
+    role: "Designer", 
+    img: "images/homepage/customer/image-1.png", 
+    text: "Exceptional experience! I've tried many others, but this one stands out for its attention to detail." 
   }
 ];
 
