@@ -1,70 +1,69 @@
-import { Stack, Typography, Link, Box, Container } from '@mui/material';
+import { Stack, Typography, Link, Box, useMediaQuery, Container } from "@mui/material";
 
 function Footer() {
+  const isLaptopUp = useMediaQuery("(min-width:1024px)");
+
   const footerLinks = [
-    "Support Center", "Invoicing", "Contract", "Careers", "Blog", "FAQs"
+    "Support Center",
+    "Invoicing",
+    "Contract",
+    "Careers",
+    "Blog",
+    "FAQs"
   ];
 
   return (
-    <Box component="footer" sx={{ width: "100%", marginTop: "10%" }}>
+    <Box component="footer" sx={{ mt: { xs: "50px", md: "80px" } }}>
       <Container maxWidth="lg">
-        <Stack 
-          direction={{ xs: "column", md: "row" }} 
-          alignItems="center" 
-          justifyContent="space-between" 
-          spacing={{ xs: 4, md: 0 }} 
-          paddingBottom="40px"
+        <Stack
+          direction={isLaptopUp ? "row" : "column"}
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={{ xs: 3, md: 0 }}
+          pb={{ xs: 2, md: 4 }}
         >
-          <Typography sx={{ 
-            color: "#484848", 
-            fontFamily: "volkhov", 
-            fontWeight: "regular", 
-            fontSize: { xs: "40px", md: "52px" } 
-          }}>
+          <Typography
+            sx={{
+              fontFamily: "Volkhov",
+              fontSize: { xs: "32px", lg: "52px" },
+              color: "#484848"
+            }}
+          >
             FASCO
           </Typography>
 
-          <Stack 
-            direction="row" 
-            flexWrap="wrap" 
+          <Stack
+            direction="row"
+            spacing={{ xs: 2, md: 4 }}
+            flexWrap="wrap"
             justifyContent="center"
-            gap={{ xs: "15px", sm: "30px" }}
           >
             {footerLinks.map((text) => (
-              <Link 
+              <Link
                 key={text}
-                href="#" 
-                sx={{ 
-                  textDecoration: "none", 
-                  color: "#484848", 
-                  fontFamily: "Poppins", 
-                  fontSize: { xs: "14px", sm: "16px" }, 
-                  whiteSpace: "nowrap"
-                }}
+                href="#"
+                underline="none"
+                sx={{ color: "#484848", fontSize: "14px" }}
               >
                 {text}
               </Link>
             ))}
           </Stack>
         </Stack>
-      </Container>
 
-      <Stack 
-        width="100%" 
-        borderTop="1px solid #EAEAEA" 
-        pt={3} 
-        pb={5}
-        px={2}
-      >
-        <Typography sx={{ 
-          textAlign: "center", 
-          color: "#484848", 
-          fontFamily: "Poppins", 
-          fontSize: { xs: "12px", sm: "16px" } 
-        }}>
-          Copyright © 2022 Xpro. All Rights Reserved
-        </Typography>
-      </Stack>
+        <Box
+          sx={{
+            borderTop: "1px solid #EAEAEA",
+            pt: 3,
+            pb: 5,
+            textAlign: "center"
+          }}
+        >
+          <Typography sx={{ fontSize: "14px", opacity: 0.8 }}>
+            Copyright © 2022 Xpro. All Rights Reserved
+          </Typography>
+        </Box>
+      </Container>
     </Box>
   );
 }

@@ -13,16 +13,16 @@ import SubscribeSection from "./components/SubscribeSection";
 function Home() {
   return (
     <>
-      <HeroSection />
-      <Brands />
+      {/* <HeroSection /> */}
+      {/* <Brands /> */}
       <Deals />
-      <Arrivals />
-      <Products />
-      <PeakySection />
-      <QualitySection />
-      <FollowSection />
-      <CustomerSection />
-      <SubscribeSection />
+      {/* <Arrivals /> */}
+      {/* <Products /> */}
+      {/* <PeakySection /> */}
+      {/* <QualitySection /> */}
+      {/* <FollowSection /> */}
+      {/* <CustomerSection /> */}
+      {/* <SubscribeSection /> */}
     </>
   );
 }

@@ -1,77 +1,85 @@
 import React, { useState } from 'react';
-import { Stack, Typography, Container } from '@mui/material';
+import { Stack, Typography, Container, useTheme, useMediaQuery } from '@mui/material';
 
 const Brands = () => {
+
   const brandData = [
-    { name: 'CHANEL', fontFamily: 'Verdana' },
-    { name: 'LOUIS VUITTON', fontFamily: 'Verdana' },
-    { name: 'PRADA', fontFamily: 'Courier New' },
-    { name: 'Calvin Klein', fontFamily: 'Verdana' },
-    { name: 'DENIM', fontFamily: 'fantasy' },
+    { name: 'CHANEL', fontFamily: 'Verdana', fontSize: '32px', fontWeight: 500 },
+    { name: 'LOUIS VUITTON', fontFamily: 'Verdana', fontSize: '18px', fontWeight: 400 },
+    { name: 'PRADA', fontFamily: 'Courier New', fontSize: '42px', fontWeight: 700 },
+    { name: 'Calvin Klein', fontFamily: 'Verdana', fontSize: '19px', fontWeight: 400 },
+    { name: 'DENIM', fontFamily: 'fantasy', fontSize: '42px', fontWeight: 700 },
   ];
 
   const [activeIndex, setActiveIndex] = useState(2);
   const total = brandData.length;
 
-  const getFontSize = (name, isActive, isMobile) => {
-    const isLong = name.length > 8;
-    if (isMobile) {
-      if (isActive) return isLong ? '16px' : '22px';
-      return isLong ? '10px' : '13px';
-    }
-    if (isActive) return isLong ? '30px' : '42px';
-    return isLong ? '16px' : '20px';
-  };
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
 
+  // Show all on desktop, only 3 on mobile/tablet
   const getVisibleIndices = () => {
+    if (isDesktop) return brandData.map((_, i) => i);
+
     const prev = (activeIndex - 1 + total) % total;
     const next = (activeIndex + 1) % total;
     return [prev, activeIndex, next];
   };
 
-  const visibleIndices = getVisibleIndices();
+  const visibleBrands = getVisibleIndices();
 
   return (
-    <Container maxWidth="lg" sx={{ mt: '5%', mb: 5 }}>
-      <Stack 
-        direction="row" 
-        justifyContent="center" 
-        alignItems="center" 
-        spacing={{ xs: 1, sm: 2, md: 8 }} 
-        sx={{ 
-          maxWidth: "1000px", 
-          margin: "30px auto",
-          minHeight: '80px',
+    <Container maxWidth="lg" sx={{ mt: 5, mb: 5 }}>
+      <Stack
+        direction="row"
+        justifyContent={isDesktop ? "space-between" : "center"}
+        alignItems="center"
+        spacing={isDesktop ? 0 : 0}
+        sx={{
+          width: "100%",
+          overflow: "hidden", // prevents overflow
         }}
       >
-        {visibleIndices.map((brandIndex) => {
-          const brand = brandData[brandIndex];
-          const isActive = brandIndex === activeIndex;
+        {visibleBrands.map((index) => {
+          const brand = brandData[index];
+          const isActive = index === activeIndex;
 
           return (
-            <Typography 
+            <Typography
               key={brand.name}
-              onClick={() => setActiveIndex(brandIndex)}
-              sx={{ 
-                cursor: 'pointer',
+              onClick={() => !isDesktop && setActiveIndex(index)}
+              sx={{
                 fontFamily: brand.fontFamily,
-                transition: 'all 0.4s ease-in-out',
-                whiteSpace: 'nowrap',
-                textAlign: 'center',
-                flex: 1,
-                
-                color: isActive ? '#000' : '#CCCCCC',
-                fontWeight: isActive ? 'bold' : 'normal',
-                
-                fontSize: {
-                  xs: getFontSize(brand.name, isActive, true),
-                  md: getFontSize(brand.name, isActive, false)
-                },
-                
-                transform: isActive ? 'scale(1.1)' : 'scale(1)',
-                '&:hover': {
-                  color: isActive ? '#000' : '#8A8A8A',
-                }
+                whiteSpace: "nowrap",
+                letterSpacing: "1px",
+                textAlign: "center",
+
+                // ------------------
+                // DESKTOP STYLE
+                // ------------------
+                ...(isDesktop && {
+                  fontSize: brand.fontSize,
+                  fontWeight: brand.fontWeight,
+                  color: "#000",
+                  cursor: "default",
+                }),
+
+                // ------------------
+                // MOBILE + TABLET STYLE
+                // ------------------
+                ...(!isDesktop && {
+                  flex: 1, // equal slots
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer",
+
+                  fontSize: isActive ? "24px" : "14px",
+                  fontWeight: isActive ? 700 : 400,
+                  color: isActive ? "#000" : "#aca6a6",
+
+                  transition: "all 0.3s ease",
+                })
               }}
             >
               {brand.name}
