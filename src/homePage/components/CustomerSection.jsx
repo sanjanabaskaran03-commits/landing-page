@@ -44,7 +44,6 @@ const CustomerSection = () => {
   const [activeStep, setActiveStep] = useState(0);
   const theme = useTheme();
   
-  // Detects if we are on tablet or mobile
   const isMobileOrTablet = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleNext = () => {
@@ -78,7 +77,6 @@ const CustomerSection = () => {
           const isPrev = index === (activeStep === 0 ? testimonials.length - 1 : activeStep - 1);
           const isNext = index === (activeStep === testimonials.length - 1 ? 0 : activeStep + 1);
 
-          // On mobile, they stack; on desktop, they spread
           const translateXValue = isMobileOrTablet ? '0%' : '40%';
           const translateYValue = isMobileOrTablet && !isActive ? '15px' : '0px';
 
@@ -88,7 +86,7 @@ const CustomerSection = () => {
               sx={{ 
                 position: 'absolute',
                 display: 'flex', 
-                flexDirection: 'row', // Force horizontal layout on all screens
+                flexDirection: 'row', 
                 p: { xs: 2, sm: 3 }, 
                 width: '95%',
                 maxWidth: 650, 
@@ -119,7 +117,7 @@ const CustomerSection = () => {
                     width: { xs: 80, sm: 120, md: 120 }, 
                     height: { xs: 100, sm: 120, md: 140 }, 
                     mr: { xs: 2, sm: 4 }, 
-                    flexShrink: 0 // Prevents the image from getting squeezed
+                    flexShrink: 0
                 }}
               />
               <CardContent sx={{ p: '0 !important', flex: 1 }}>
@@ -151,14 +149,12 @@ const CustomerSection = () => {
         })}
       </Box>
 
-      {/* Navigation Buttons */}
-      {/* Navigation Controls - Pulled up using negative margin */}
       <Box sx={{ 
         display: 'flex', 
         justifyContent: 'center', 
         gap: 2, 
-        mt: { xs: -10, md: -6 }, // Negative margin pulls the buttons upward
-        position: 'relative',   // Ensures they sit on top of any overlapping shadows
+        mt: { xs: -10, md: -6 }, 
+        position: 'relative',   
         zIndex: 10 
       }}>
         <IconButton 

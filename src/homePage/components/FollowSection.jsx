@@ -25,7 +25,6 @@ const FollowSection = () => {
         }
       }} />
 
-      {/* Header-aligned Text Section */}
       <Box sx={{ px: 2 }}>
         <Typography 
           variant="h2" 
@@ -70,9 +69,7 @@ const FollowSection = () => {
           spacing={0} 
           sx={{ 
             width: '100%',
-            // 'nowrap' ensures they stay in one line
             flexWrap: 'nowrap', 
-            // Only allow scroll on mobile
             overflowX: { xs: 'auto', md: 'hidden' }, 
             scrollSnapType: { xs: 'x mandatory', md: 'none' },
             WebkitOverflowScrolling: 'touch',
@@ -85,10 +82,7 @@ const FollowSection = () => {
               component="img" 
               src={src} 
               sx={{  
-                // Mobile: 3 images per view.
-                // Desktop: flex 1 forces all 7 images to divide the 100% width equally.
                 flex: { xs: '0 0 33.333%', md: '1 1 0' }, 
-                // minWidth 0 is a flexbox fix to prevent images from pushing past 100% width
                 minWidth: 0, 
                 height: { xs: '150px', md: '200px', lg: '280px' },
                 objectFit: 'cover', 

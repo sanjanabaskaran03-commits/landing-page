@@ -17,7 +17,6 @@ const Brands = () => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
 
-  // Show all on desktop, only 3 on mobile/tablet
   const getVisibleIndices = () => {
     if (isDesktop) return brandData.map((_, i) => i);
 
@@ -37,7 +36,7 @@ const Brands = () => {
         spacing={isDesktop ? 0 : 0}
         sx={{
           width: "100%",
-          overflow: "hidden", // prevents overflow
+          overflow: "hidden", 
         }}
       >
         {visibleBrands.map((index) => {
@@ -54,9 +53,6 @@ const Brands = () => {
                 letterSpacing: "1px",
                 textAlign: "center",
 
-                // ------------------
-                // DESKTOP STYLE
-                // ------------------
                 ...(isDesktop && {
                   fontSize: brand.fontSize,
                   fontWeight: brand.fontWeight,
@@ -64,11 +60,8 @@ const Brands = () => {
                   cursor: "default",
                 }),
 
-                // ------------------
-                // MOBILE + TABLET STYLE
-                // ------------------
                 ...(!isDesktop && {
-                  flex: 1, // equal slots
+                  flex: 1, 
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",

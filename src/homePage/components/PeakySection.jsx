@@ -1,7 +1,6 @@
 import React from 'react';
 import { Stack, Typography, Button, Box, useMediaQuery, useTheme } from '@mui/material';
 
-// Reusable tag style
 const tagBaseStyle = {
   position: "absolute",
   bgcolor: "#fff",
@@ -30,7 +29,6 @@ function PeakySection() {
         overflow: "hidden"
       }}
     >
-      {/* LEFT SECTION: Image & Floating Tags */}
       <Box
         sx={{
           width: { xs: "100%", md: "50%" },
@@ -43,7 +41,6 @@ function PeakySection() {
         }}
       >
         <Box className="tags-layer" sx={{ position: "absolute", inset: 0, zIndex: 4 }}>
-          {/* 1. FLAT CAP */}
           <Typography sx={{ ...tagBaseStyle, top: { xs: "15%", md: "90px" }, right: { xs: "20%", md: "140px",lg:"190px" } }}>
             Flat Cap
           </Typography>
@@ -53,7 +50,6 @@ function PeakySection() {
             />
           )}
 
-          {/* 2. SUSPENDER */}
           <Typography sx={{ ...tagBaseStyle, top: { xs: "40%", md: "190px" }, left: { xs: "2%", md: "30px",lg:"55px" } }}>
             Suspender
           </Typography>
@@ -63,7 +59,6 @@ function PeakySection() {
             />
           )}
 
-          {/* 3. HUGO BOSS (Upper) */}
           <Typography sx={{ ...tagBaseStyle, top: { xs: "49%", md: "240px" }, right: { xs: "27%", md: "215px" } }}>
             Hugo Boss
           </Typography>
@@ -73,7 +68,6 @@ function PeakySection() {
             />
           )}
 
-          {/* 4. HUGO BOSS (Lower) */}
           <Typography sx={{ ...tagBaseStyle, top: { xs: "63%", md: "305px",lg:"305px" }, left: { xs: "1%", md: "20px",lg:"50px" } }}>
             Hugo Boss
           </Typography>
@@ -83,7 +77,6 @@ function PeakySection() {
             />
           )}
 
-          {/* 5. SANTONI (Shoes) */}
           <Typography sx={{ ...tagBaseStyle, bottom: { xs: "4%", md: "25px",lg:"30px"}, right: { xs: "35%", md: "180px",lg:"230px" } }}>
             Santoni
           </Typography>
@@ -101,7 +94,6 @@ function PeakySection() {
         />
       </Box>
 
-      {/* RIGHT SECTION: Content - Divider removed here */}
       <Stack
         sx={{
           width: { xs: "100%", md: "50%" },

@@ -10,7 +10,6 @@ import {
 
 function SubscribeSection() {
   return (
-    // Container ensures width matches the Header (lg = 1200px)
     <Container maxWidth="lg" sx={{ py: { xs: 4, md: 10 } }}>
       <Stack 
         direction={{ xs: "column", lg: "row" }} 
@@ -20,7 +19,6 @@ function SubscribeSection() {
         sx={{ width: "100%" }}
       >
         
-        {/* First Image (Left on Desktop, Top on Mobile) */}
         <Box sx={{ flex: 1, textAlign: "center", width: "100%" }}>
           <Box 
             component="img" 
@@ -35,7 +33,6 @@ function SubscribeSection() {
           />
         </Box>
 
-        {/* Subscribe Content (Center) */}
         <Stack 
           spacing={2} 
           alignItems="center" 
@@ -67,13 +64,11 @@ function SubscribeSection() {
             sollicitudin aliquam sem. Scelerisque duis ultrices sollicitudin
           </Typography>
 
-          {/* Form Wrapper */}
           <Stack 
             direction="column" 
             spacing={2} 
             sx={{ width: "100%", maxWidth: "450px", mt: 2 }}
           >
-            {/* Input Field replacing .subscribe-mail */}
             <TextField
               fullWidth
               placeholder="michael@ymail.com"
@@ -92,14 +87,13 @@ function SubscribeSection() {
               }}
             />
 
-            {/* Subscribe Button - Always on next line & Centered */}
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <Button 
                 variant="contained"
                 sx={{ 
                   bgcolor: "#000", 
                   color: "#fff", 
-                  width: { xs: "50%", sm: "200px",md:"190px",lg:"150px" }, // Matches your 60-70% requirement for mobile
+                  width: { xs: "50%", sm: "200px",md:"190px",lg:"150px" }, 
                   height: { xs: "45px", md: "55px" },
                   borderRadius: "10px", 
                   textTransform: "none",
