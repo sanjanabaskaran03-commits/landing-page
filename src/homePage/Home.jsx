@@ -21,8 +21,8 @@ function Home() {
       {/* <PeakySection /> */}
       {/* <QualitySection /> */}
       {/* <FollowSection /> */}
-      <CustomerSection />
-      {/* <SubscribeSection /> */}
+      {/* <CustomerSection /> */}
+      <SubscribeSection />
     </>
   );
 }

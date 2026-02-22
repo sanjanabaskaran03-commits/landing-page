@@ -1,113 +1,137 @@
-import { Stack, Typography, Button, Box, TextField } from '@mui/material';
+import React from 'react';
+import { 
+  Stack, 
+  Typography, 
+  Button, 
+  Box, 
+  TextField, 
+  Container 
+} from '@mui/material';
 
 function SubscribeSection() {
   return (
-    <Stack 
-      direction={{ xs: "column", lg: "row" }} 
-      alignItems="center" 
-      justifyContent="center"
-      sx={{ 
-        width: "100%", 
-        maxWidth: "1200px", 
-        margin: { xs: "40px auto", md: "80px auto" }, 
-        px: 2,
-        gap: { xs: 4, lg: 0 } 
-      }}
-    >
-      <Box sx={{ flex: 1, order: { xs: 1, lg: 1 }, textAlign: "center" }}>
-        <Box 
-          component="img" 
-          src="/images/homepage/subscribe/subscribe-2.png" 
-          sx={{ height: { xs: "220px", md: "350px", lg: "450px" }, objectFit: "contain" }} 
-        />
-      </Box>
-
+    // Container ensures width matches the Header (lg = 1200px)
+    <Container maxWidth="lg" sx={{ py: { xs: 4, md: 10 } }}>
       <Stack 
-        spacing={3} 
+        direction={{ xs: "column", lg: "row" }} 
         alignItems="center" 
-        sx={{ flex: 2, textAlign: "center", order: { xs: 2, lg: 2 } }}
+        justifyContent="center"
+        spacing={{ xs: 4, lg: 2 }}
+        sx={{ width: "100%" }}
       >
-        <Typography 
-          sx={{ 
-            fontFamily: "Volkhov", 
-            fontSize: { xs: "24px", md: "36px" }, 
-            color: "#484848",
-            lineHeight: 1.2,
-            fontWeight:"bold"
-          }}
-        >
-          Subscribe To Our Newsletter
-        </Typography>
-
-        <Typography 
-          sx={{ 
-            fontFamily: "Poppins", 
-            fontSize: "12px", 
-            color: "#8A8A8A", 
-            maxWidth: "420px" 
-          }}
-        >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices
-          sollicitudin aliquam sem.
-        </Typography>
-
-        <Stack 
-          direction={{ xs: "column", sm: "row" }} 
-          spacing={2}
-          alignItems="center"
-          justifyContent="center"
-          sx={{ 
-            width: "100%", 
-            maxWidth: "500px", 
-            mt: 2 
-          }}
-        >
-          <TextField
-            fullWidth
-            placeholder="michael@ymail.com"
-            variant="standard"
-            InputProps={{
-              disableUnderline: true,
-              sx: {
-                bgcolor: "#fff",
-                borderRadius: "10px",
-                px: 2,
-                height: "55px",
-                boxShadow: "0px 10px 30px rgba(0,0,0,0.05)",
-                fontFamily: "Poppins",
-              }
-            }}
-          />
-          
-          <Button 
-            variant="contained"
+        
+        {/* First Image (Left on Desktop, Top on Mobile) */}
+        <Box sx={{ flex: 1, textAlign: "center", width: "100%" }}>
+          <Box 
+            component="img" 
+            src="/images/homepage/subscribe/subscribe-2.png" 
             sx={{ 
-              bgcolor: "#000", 
-              color: "#fff", 
-              width: { xs: "160px", sm: "auto" }, 
-              px: 4, 
-              height: "55px",
-              borderRadius: "10px", 
-              textTransform: "none",
-              fontSize: "16px",
+              width: "100%", 
+              height: { xs: "auto", md: "350px", lg: "450px" }, 
+              maxWidth: "400px",
+              objectFit: "contain",
+              borderRadius: "8px"
+            }} 
+          />
+        </Box>
+
+        {/* Subscribe Content (Center) */}
+        <Stack 
+          spacing={2} 
+          alignItems="center" 
+          sx={{ flex: 2, textAlign: "center", px: { xs: 2, md: 0 } }}
+        >
+          <Typography 
+            variant="h1"
+            sx={{ 
+              fontFamily: "Volkhov", 
+              fontSize: { xs: "21px", md: "36px", lg: "42px" }, 
+              color: "#484848",
               fontWeight: "bold",
-              boxShadow: "0px 10px 20px rgba(0,0,0,0.2)",
-              "&:hover": { bgcolor: "#333" }
+              lineHeight: 1.2
             }}
           >
-            Subscribe 
-          </Button>
-        </Stack>
-      </Stack>
+            Subscribe To Our Newsletter
+          </Typography>
 
-      <Box sx={{ flex: 1, order: { xs: 3, lg: 3 }, textAlign: "center" }}>
-        <Box 
-          component="img" 
-          src="/images/homepage/subscribe/subscribe-1.png" 
-          sx={{ height: { xs: "220px", md: "350px", lg: "450px" }, objectFit: "contain" }} 
-        />
-      </Box>
-    </Stack>
+          <Typography 
+            sx={{ 
+              fontFamily: "Poppins", 
+              fontSize: { xs: "10px", md: "14px" }, 
+              color: "#8A8A8A", 
+              maxWidth: "420px",
+              lineHeight: 1.5
+            }}
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices
+            sollicitudin aliquam sem. Scelerisque duis ultrices sollicitudin
+          </Typography>
+
+          {/* Form Wrapper */}
+          <Stack 
+            direction="column" 
+            spacing={2} 
+            sx={{ width: "100%", maxWidth: "450px", mt: 2 }}
+          >
+            {/* Input Field replacing .subscribe-mail */}
+            <TextField
+              fullWidth
+              placeholder="michael@ymail.com"
+              variant="standard"
+              InputProps={{
+                disableUnderline: true,
+                sx: {
+                  bgcolor: "#fff",
+                  borderRadius: "10px",
+                  px: 2.5,
+                  height: { xs: "45px", md: "55px" },
+                  boxShadow: "0px 10px 30px rgba(0,0,0,0.05)",
+                  fontFamily: "Poppins",
+                  fontSize: "14px"
+                }
+              }}
+            />
+
+            {/* Subscribe Button - Always on next line & Centered */}
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Button 
+                variant="contained"
+                sx={{ 
+                  bgcolor: "#000", 
+                  color: "#fff", 
+                  width: { xs: "50%", sm: "200px",md:"190px",lg:"150px" }, // Matches your 60-70% requirement for mobile
+                  height: { xs: "45px", md: "55px" },
+                  borderRadius: "10px", 
+                  textTransform: "none",
+                  fontSize: {xs:"12px",md:"20px",lg:"14px"},
+                  fontWeight: "bold",
+                  boxShadow: "0px 10px 20px rgba(0,0,0,0.2)",
+                  "&:hover": { bgcolor: "#333" }
+                }}
+              >
+                Subscribe Now
+              </Button>
+            </Box>
+          </Stack>
+        </Stack>
+
+        {/* Second Image (Right on Desktop, Bottom on Mobile) */}
+        <Box sx={{ flex: 1, textAlign: "center", width: "100%" }}>
+          <Box 
+            component="img" 
+            src="/images/homepage/subscribe/subscribe-1.png" 
+            sx={{ 
+              width: "100%", 
+              height: { xs: "auto", md: "350px", lg: "450px" }, 
+              maxWidth: "400px",
+              objectFit: "contain",
+              borderRadius: "8px"
+            }} 
+          />
+        </Box>
+
+      </Stack>
+    </Container>
   );
 }
 
