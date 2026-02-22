@@ -15,13 +15,13 @@ function Home() {
     <>
       {/* <HeroSection /> */}
       {/* <Brands /> */}
-      <Deals />
+      {/* <Deals /> */}
       {/* <Arrivals /> */}
       {/* <Products /> */}
       {/* <PeakySection /> */}
       {/* <QualitySection /> */}
       {/* <FollowSection /> */}
-      {/* <CustomerSection /> */}
+      <CustomerSection />
       {/* <SubscribeSection /> */}
     </>
   );

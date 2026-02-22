@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Typography, Box, GlobalStyles, Container } from '@mui/material';
+import { Stack, Typography, Box, GlobalStyles } from '@mui/material';
 
 const FollowSection = () => {
   const images = [
@@ -25,12 +25,13 @@ const FollowSection = () => {
         }
       }} />
 
-      <Container maxWidth="lg">
+      {/* Header-aligned Text Section */}
+      <Box sx={{ px: 2 }}>
         <Typography 
           variant="h2" 
           sx={{ 
             fontFamily: 'Volkhov, serif', 
-            fontSize: { xs: '26px', md: '46px' }, 
+            fontSize: { xs: '26px', md: '46px', lg: "48px" }, 
             color: '#484848', 
             textAlign: 'center',
             fontWeight: "bold" 
@@ -42,10 +43,10 @@ const FollowSection = () => {
         <Typography 
           sx={{ 
             fontFamily: 'Poppins, sans-serif', 
-            fontSize: '16px',
+            fontSize: '24px',
             color: '#8A8A8A', 
             textAlign: 'center',
-            maxWidth: '650px',
+            maxWidth: '599px',
             mx: 'auto',
             mt: 2,
             lineHeight: 1.6
@@ -53,50 +54,64 @@ const FollowSection = () => {
         >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices sollicitudin aliquam sem.
         </Typography>
-      </Container>
+      </Box>
 
-      <Stack 
-        className="hide-scrollbar"
-        direction="row" 
-        alignItems="flex-end" 
-        spacing={0} 
+      {/* Full Width Image Container */}
+      <Box 
         sx={{ 
-          mt: '60px', 
-          width: '100%',
-          overflowX: 'auto',
-          scrollSnapType: 'x mandatory',
-          WebkitOverflowScrolling: 'touch',
-          animation: { md: 'floatTogether 5s ease-in-out infinite', xs: 'none' }, // Disable float on mobile for better swiping
+          width: '100%', 
+          mt: '60px',
         }}
       >
-        {images.map((src, i) => (
-          <Box 
-            key={i} 
-            component="img" 
-            src={src} 
-            sx={{  
-              flex: { xs: '0 0 33.33%', md: '0 0 180px' }, 
-              height: { xs: '150px', md: '240px' },
-              objectFit: 'cover', 
-              transition: 'all 0.3s ease',
-              filter: 'brightness(0.95)',
-              cursor: 'pointer',
-              scrollSnapAlign: 'start',
-              '&:nth-of-type(2n)': {
-                height: { md: '300px' },
-                width: { md: '210px' },
-                flex: { md: '0 0 210px' },
-                filter: 'brightness(1)',
-              },
-              '&:hover': {
-                filter: 'brightness(1)',
-                zIndex: 10,
-                transform: 'scale(1.05)', 
-              }
-            }} 
-          />
-        ))}
-      </Stack>
+        <Stack 
+          className="hide-scrollbar"
+          direction="row" 
+          alignItems="flex-end" 
+          spacing={0} 
+          sx={{ 
+            width: '100%',
+            // 'nowrap' ensures they stay in one line
+            flexWrap: 'nowrap', 
+            // Only allow scroll on mobile
+            overflowX: { xs: 'auto', md: 'hidden' }, 
+            scrollSnapType: { xs: 'x mandatory', md: 'none' },
+            WebkitOverflowScrolling: 'touch',
+            animation: { md: 'floatTogether 5s ease-in-out infinite', xs: 'none' }, 
+          }}
+        >
+          {images.map((src, i) => (
+            <Box 
+              key={i} 
+              component="img" 
+              src={src} 
+              sx={{  
+                // Mobile: 3 images per view.
+                // Desktop: flex 1 forces all 7 images to divide the 100% width equally.
+                flex: { xs: '0 0 33.333%', md: '1 1 0' }, 
+                // minWidth 0 is a flexbox fix to prevent images from pushing past 100% width
+                minWidth: 0, 
+                height: { xs: '150px', md: '200px', lg: '280px' },
+                objectFit: 'cover', 
+                display: 'block',
+                transition: 'all 0.3s ease',
+                filter: 'brightness(0.95)',
+                cursor: 'pointer',
+                
+                '&:nth-of-type(2n)': {
+                  height: { md: '300px', lg: '360px' },
+                  filter: 'brightness(1)',
+                },
+                
+                '&:hover': {
+                  filter: 'brightness(1)',
+                  zIndex: 10,
+                  transform: { md: 'scale(1.05)', xs: 'none' }, 
+                }
+              }} 
+            />
+          ))} 
+        </Stack>
+      </Box>
     </Box>
   );
 };

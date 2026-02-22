@@ -1,8 +1,8 @@
-import React, { useState } from 'react'; // Added useState
-import { Stack, Typography, Button, Box, Rating } from '@mui/material';
-import { Link as RouterLink } from "react-router-dom";
+import React, { useState } from 'react';
+import { Stack, Typography, Button, Box, Rating, useMediaQuery } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess'; // Icon for View Less
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 const productData = [
   { id: 0, title: "Shiny Dress", price: "$95.50", brand: "Al Karam", reviews: "4.1k" },
@@ -14,14 +14,22 @@ const productData = [
 ];
 
 function Products() {
-  // State to track if we are showing all products
   const [showAll, setShowAll] = useState(false);
+  const isLargeScreen = useMediaQuery('(min-width:1024px)');
+  const navigate = useNavigate();
 
-  // Logic: If showAll is true, show everything. Else, show only 2.
-  const visibleProducts = showAll ? productData : productData.slice(0, 2);
+  const visibleProducts = isLargeScreen ? productData : (showAll ? productData : productData.slice(0, 2));
+
+  const handleButtonClick = () => {
+    if (isLargeScreen) {
+      navigate('/shop'); 
+    } else {
+      setShowAll(!showAll);
+    }
+  };
 
   return (
-    <Stack sx={{ width: "95%", maxWidth: "1000px", margin: "30px auto", alignItems: "center" }}>
+    <Stack sx={{ width: "95%", maxWidth: "1200px", margin: "30px auto", alignItems: "center" }}>
       
       <Box 
         display="grid" 
@@ -76,12 +84,10 @@ function Products() {
         ))}
       </Box>
 
-      {/* TOGGLE BUTTON */}
       <Button 
         variant="contained"
-        // Toggle the state when clicked
-        onClick={() => setShowAll(!showAll)}
-        startIcon={showAll ? <ExpandLessIcon /> : <AcUnitIcon />}
+        onClick={handleButtonClick}
+        startIcon={(!isLargeScreen && showAll) ? <ExpandLessIcon /> : <AcUnitIcon />}
         sx={{
           mt: 6,
           bgcolor: "#000",
@@ -95,7 +101,7 @@ function Products() {
           "&:hover": { bgcolor: "#333" }
         }}
       >
-        {showAll ? "View Less" : "View More"}
+        {isLargeScreen ? "View More" : (showAll ? "View Less" : "View More")}
       </Button>
     </Stack>
   );
