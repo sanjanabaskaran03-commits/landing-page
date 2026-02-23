@@ -55,7 +55,6 @@ const FollowSection = () => {
         </Typography>
       </Box>
 
-      {/* Full Width Image Container */}
       <Box 
         sx={{ 
           width: '100%', 
