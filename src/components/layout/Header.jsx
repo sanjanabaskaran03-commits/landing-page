@@ -8,7 +8,7 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import MenuIcon from "@mui/icons-material/Menu";
 
-function Header() {
+function Header({ cartCount = 0 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width:1024px)");
 
@@ -20,14 +20,24 @@ function Header() {
   ];
 
   return (
-    <Box component="header" sx={{ py: { xs: 2, md: 3 } }}>
+    <Box 
+      component="header" 
+      sx={{ 
+        py: { xs: 2, md: 3 },
+        position: "sticky",
+        top: 0,
+        zIndex: 1100,
+        bgcolor: "white",
+        boxShadow: "0px 2px 10px rgba(0,0,0,0.05)",
+      }}
+    >
       <Container maxWidth="lg">
         <Stack direction="row" justifyContent="space-between" alignItems="center">
-
           <Typography
             sx={{
               fontFamily: "Volkhov",
               color: "#484848",
+              fontWeight: "bold",
               fontSize: { xs: "26px", md: "32px", lg: "48px" }
             }}
           >
@@ -42,7 +52,7 @@ function Header() {
                   component={RouterLink}
                   to={link.path}
                   underline="none"
-                  sx={{ color: "#484848" }}
+                  sx={{ color: "#484848", fontWeight: 500 }}
                 >
                   {link.title}
                 </Link>
@@ -51,49 +61,28 @@ function Header() {
           )}
 
           <Stack direction="row" spacing={1} alignItems="center" color="#484848">
-            <SearchIcon />
-
+            <IconButton color="inherit"><SearchIcon /></IconButton>
+            
             {isDesktop && (
               <>
-                <PermIdentityIcon />
-                <StarBorderIcon />
+                <IconButton color="inherit"><PermIdentityIcon /></IconButton>
+                <IconButton color="inherit"><StarBorderIcon /></IconButton>
               </>
             )}
 
-            <IconButton component={RouterLink} to="/cart">
-              <ShoppingBagIcon />
+            <IconButton component={RouterLink} to="/cart" color="inherit">
+               <ShoppingBagIcon />
             </IconButton>
 
             {!isDesktop && (
-              <IconButton onClick={() => setMobileOpen(true)}>
+              <IconButton onClick={() => setMobileOpen(true)} color="inherit">
                 <MenuIcon />
               </IconButton>
             )}
           </Stack>
         </Stack>
       </Container>
-
-      <Drawer
-        anchor="right"
-        open={mobileOpen}
-        onClose={() => setMobileOpen(false)}
-      >
-        <Box sx={{ width: 260, pt: 5 }}>
-          <List>
-            {navLinks.map((link) => (
-              <ListItem key={link.title} disablePadding>
-                <ListItemButton
-                  component={RouterLink}
-                  to={link.path}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  <ListItemText primary={link.title} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Drawer>
+      {/* ... Drawer code ... */}
     </Box>
   );
 }
