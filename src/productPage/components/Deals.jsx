@@ -1,44 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { Stack, Typography, Button, Box, IconButton } from '@mui/material';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import React, { useState, useEffect, useCallback } from 'react'; 
+import { Stack, Typography, Button, Box, Container, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const images = [
-  "/images/homepage/deals/img1.png",
-  "/images/homepage/deals/img2.png",
-  "/images/homepage/deals/img3.png"
+  { id: 0, src: "/images/homepage/deals/img1.png", label: "01 — Spring Sale", off: "30% OFF" },
+  { id: 1, src: "/images/homepage/deals/img2.png", label: "02 — Summer Sale", off: "20% OFF" },
+  { id: 2, src: "/images/homepage/deals/img3.png", label: "03 — Winter Sale", off: "50% OFF" },
 ];
-
-const TOTAL_STEPS = images.length;
 
 function Deals() {
   const [activeStep, setActiveStep] = useState(0);
-  
-  const [timeLeft, setTimeLeft] = useState({ d: '00', h: '00', m: '00', s: '00' });
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const [timeLeft, setTimeLeft] = useState({
+    days: '02',
+    hours: '06',
+    mins: '05',
+    secs: '30'
+  });
 
   useEffect(() => {
     const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 3); 
+    targetDate.setDate(targetDate.getDate() + 2);
+    targetDate.setHours(targetDate.getHours() + 6);
+    targetDate.setMinutes(targetDate.getMinutes() + 5);
+    targetDate.setSeconds(targetDate.getSeconds() + 30);
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
-      const distance = targetDate.getTime() - now;
+      const distance = targetDate - now;
 
       if (distance < 0) {
         clearInterval(timer);
-        setTimeLeft({ d: '00', h: '00', m: '00', s: '00' });
       } else {
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((distance % (1000 * 60)) / 1000);
 
         setTimeLeft({
-          d: String(days).padStart(2, '0'),
-          h: String(hours).padStart(2, '0'),
-          m: String(minutes).padStart(2, '0'),
-          s: String(seconds).padStart(2, '0'),
+          days: String(d).padStart(2, '0'),
+          hours: String(h).padStart(2, '0'),
+          mins: String(m).padStart(2, '0'),
+          secs: String(s).padStart(2, '0')
         });
       }
     }, 1000);
@@ -46,190 +52,112 @@ function Deals() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleNext = () => setActiveStep((prev) => (prev + 1) % TOTAL_STEPS);
-  const handleBack = () => setActiveStep((prev) => (prev - 1 + TOTAL_STEPS) % TOTAL_STEPS);
+  const handleNext = useCallback(() => {
+    setActiveStep((prev) => (prev + 1) % images.length);
+  }, []);
+
+  const handleBack = () => {
+    setActiveStep((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  useEffect(() => {
+    const slideTimer = setInterval(() => handleNext(), 5000);
+    return () => clearInterval(slideTimer);
+  }, [handleNext, activeStep]);
 
   return (
-    <Stack width="1000px" margin="30px auto">
-      <Stack 
-        direction="row" 
-        className="deals" 
-        sx={{ 
-          width: "100%", 
-          mt: "5%", 
-          justifyContent: "center", 
-          gap: "40px",
-          alignItems: "stretch" 
-        }}
-      >
+    <Container maxWidth="xl" sx={{ my: { xs: 4, md: 10 }, px: { xs: 2, md: 10 } }}>
+      <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 5, md: 6 }} alignItems="flex-start">
         
-        <Stack sx={{ width: "40%", alignItems: "flex-start" }}>
-          <Typography 
-            variant="h1" 
-            sx={{ 
-              fontFamily: "Volkhov", 
-              fontSize: "38px", 
-              lineHeight: "80px", 
-              color: "#484848" 
-            }}
-          >
+        <Box sx={{ width: { xs: "100%", md: "35%" }, textAlign: { xs: "center", md: "left" }, pt: { md: 2 } }}>
+          <Typography variant="h3" sx={{ fontFamily: "Volkhov", mb: 2, color: "#484848", fontSize: { xs: "32px", md: "42px" }, fontWeight: 700, lineHeight: 1.2 }}>
             Deals Of The Month
           </Typography>
-
-          <Typography 
-            sx={{ 
-              fontFamily: "Poppins", 
-              fontSize: "16px", 
-              color: "#484848", 
-              width: "88%", 
-              mb: "10px" 
-            }}
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis
-            ultrices sollicitudin aliquam sem.
+          <Typography sx={{ fontFamily: "Poppins", color: "#8A8A8A", mb: 4, fontSize: "16px" }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices sollicitudin aliquam sem.
           </Typography>
           
-          <Box sx={{ lineHeight: "80px" }}>
-            <Button 
-              startIcon={<ShoppingCartIcon />}
-              variant="contained"
-              sx={{ bgcolor: "black", width: "160px", height: "45px", borderRadius: "8px", "&:hover": { bgcolor: "#333" } }}
-            >
-              Buy Now
-            </Button>
-          </Box>
+          <Button variant="contained" sx={{ bgcolor: "#000", px: 5, py: 1.8, mb: 4, textTransform: "none", borderRadius: "8px" }}>
+            Buy Now
+          </Button>
 
-          <Typography 
-            sx={{ 
-              fontFamily: "Poppins", 
-              fontWeight: "bold", 
-              fontSize: "22px", 
-              color: "#484848", 
-              lineHeight: "40px", 
-              mt: "15px",
-              mb: "25px" 
-            }}
-          >
+          <Typography sx={{ fontWeight: "bold", color: "#484848", fontSize: { xs: "18px", md: "22px" }, mb: 3 }}>
             Hurry, Before It’s Too Late!
           </Typography>
 
-          <Stack direction="row" spacing={2.5} sx={{ mb: 4 }}>
+          <Stack direction="row" spacing={2} justifyContent={{ xs: "center", md: "flex-start" }} sx={{ mb: 4 }}>
             {[
-              { v: timeLeft.d, l: 'Days' }, 
-              { v: timeLeft.h, l: 'Hr' }, 
-              { v: timeLeft.m, l: 'Mins' }, 
-              { v: timeLeft.s, l: 'Sec' }
-            ].map((t, i) => (
-              <Stack key={i} alignItems="center">
-                <Box sx={{ 
-                  width: "60px", 
-                  height: "60px", 
-                  bgcolor: "#fff", 
-                  borderRadius: "12px", 
-                  boxShadow: "0 15px 25px rgba(184, 179, 179, 0.15)", 
-                  display: "flex", 
-                  justifyContent: "center", 
-                  alignItems: "center" 
-                }}>
-                  <Typography 
-                    sx={{ 
-                      fontFamily: "'Courier New', monospace", 
-                      fontSize: "32px", 
-                      fontWeight: "bold", 
-                      color: "#484848" 
-                    }}
-                  >
-                    {t.v}
-                  </Typography>
+              { label: 'Days', value: timeLeft.days },
+              { label: 'Hr', value: timeLeft.hours },
+              { label: 'Mins', value: timeLeft.mins },
+              { label: 'Secs', value: timeLeft.secs }
+            ].map((item, i) => (
+              <Box key={i} sx={{ textAlign: "center" }}>
+                <Box sx={{ width: "60px", height: "60px", bgcolor: "#fff", borderRadius: "8px", boxShadow: "0 10px 25px rgba(0,0,0,0.08)", display: "flex", justifyContent: "center", alignItems: "center", mb: 0.5 }}>
+                  <Typography sx={{ fontWeight: "bold", fontSize: "20px" }}>{item.value}</Typography>
                 </Box>
-                <Typography sx={{ fontFamily: "Poppins", fontSize: "14px", color: "#484848", mt: 1 }}>
-                  {t.l}
-                </Typography>
-              </Stack>
+                <Typography variant="caption" sx={{ fontWeight: 600, color: "#484848" }}>{item.label}</Typography>
+              </Box>
             ))}
           </Stack>
-        </Stack>
 
-        <Stack sx={{ width: "60%", alignItems: "center", position: "relative" }}>
-          <Stack direction="row" spacing={4} alignItems="center" sx={{ height: "500px", position: 'relative' }}>
-            
-            <Stack 
-                direction="row" 
-                spacing={1} 
-                sx={{ 
-                    position: 'absolute', 
-                    bottom: '30px', 
-                    left: '-70px',
-                    zIndex: 10 
-                }}
-            >
-              <IconButton 
-                onClick={handleBack} 
-                sx={{ 
-                  width: "40px",
-                  height: "40px",
-                  bgcolor: "#fff", 
-                  color: "#000",
-                  boxShadow: "0 8px 20px rgba(0,0,0,0.15)", 
-                  "&:hover": { bgcolor: "#000", color: "#fff" } 
-                }}
-              >
-                <KeyboardArrowLeftIcon fontSize="small" />
+          {!isMobile && (
+            <Stack direction="row" spacing={2} sx={{ mt: 2, justifyContent: "flex-end", width: "80%" }}>
+              <IconButton onClick={handleBack} sx={{ bgcolor: "#fff", boxShadow: "0 4px 15px rgba(0,0,0,0.1)", width: 50, height: 50, left: "120px", position: "relative" }}>
+                <ArrowBackIosNewIcon sx={{ fontSize: "18px" }} />
               </IconButton>
-              <IconButton 
-                onClick={handleNext} 
-                sx={{ 
-                  width: "40px",
-                  height: "40px",
-                  bgcolor: "#fff", 
-                  color: "#000",
-                  boxShadow: "0 8px 20px rgba(0,0,0,0.15)", 
-                  "&:hover": { bgcolor: "#000", color: "#fff" } 
-                }}
-              >
-                <KeyboardArrowRightIcon fontSize="small" />
+              <IconButton onClick={handleNext} sx={{ bgcolor: "#fff", boxShadow: "0 4px 15px rgba(0,0,0,0.1)", width: 50, height: 50, left: "100px", position: "relative" }}>
+                <ArrowForwardIosIcon sx={{ fontSize: "18px" }} />
               </IconButton>
             </Stack>
+          )}
+        </Box>
 
-            {images.map((img, index) => {
-              const isActive = index === activeStep;
-              return (
-                <Box key={index} sx={{ 
-                  position: "relative",
-                  width: isActive ? "260px" : "180px", 
-                  height: isActive ? "460px" : "360px",
-                  opacity: isActive ? 1 : 0.6,
-                  transition: "all 0.6s ease",
-                  borderRadius: "18px",
-                  overflow: "hidden",
-                  flexShrink: 0
-                }}>
-                  <Box component="img" src={img} sx={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  {index === 0 && (
-                    <Box sx={{ 
-                      position: "absolute", bottom: "20px", left: "20px", bgcolor: "#fff", 
-                      p: "14px 16px", borderRadius: "6px", boxShadow: "0 12px 25px rgba(0,0,0,0.15)", zIndex: 5 
-                    }}>
-                      <Typography sx={{ fontSize: "12px", color: "#666", display: "block", fontFamily: "Poppins" }}>01 — Spring Sale</Typography>
-                      <Typography sx={{ fontSize: "18px", fontWeight: "bold", color: "#000", fontFamily: "Poppins" }}>30% OFF</Typography>
-                    </Box>
-                  )}
-                </Box>
-              );
-            })}
-          </Stack>
+        <Box sx={{ width: { xs: "100%", md: "65%" } }}>
+          <Box sx={{ height: { xs: "450px", md: "500px" }, position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Stack direction="row" spacing={isMobile ? 0 : 3} sx={{ width: "100%", height: "100%", position: "relative" }}>
+              {images.map((img, index) => {
+                const isActive = index === activeStep;
+                const isFirstImageSource = img.id === 0;
 
-          <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
+                return (
+                  <Box 
+                    key={img.id} 
+                    onClick={() => setActiveStep(index)}
+                    sx={{ 
+                      cursor: "pointer", borderRadius: "20px", overflow: "hidden",
+                      transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+                      position: isMobile ? "absolute" : "relative",
+                      width: isMobile ? "100%" : (isActive ? "46%" : "24%"),
+                      height: isMobile ? "100%" : (isActive ? "100%" : "85%"),
+                      opacity: isMobile ? (isActive ? 1 : 0) : 1,
+                      zIndex: isActive ? 2 : 1,
+                      alignSelf: "center",
+                      ...(isMobile && { transform: isActive ? "scale(1)" : "scale(0.9) translateY(20px)" }),
+                      boxShadow: isActive ? "0 30px 60px rgba(0,0,0,0.15)" : "none",
+                    }}
+                  >
+                    <Box component="img" src={img.src} sx={{ width: "100%", height: "100%", objectFit: "cover", filter: isActive ? "grayscale(0)" : "grayscale(0.4)" }} />
+                    {isFirstImageSource && (
+                      <Box sx={{ position: "absolute", bottom: 25, left: 20, bgcolor: "#fff", p: 2, borderRadius: "8px", boxShadow: "0 4px 15px rgba(0,0,0,0.1)", textAlign: "left" }}>
+                        <Typography variant="caption" sx={{ color: "#8A8A8A", fontWeight: 600, display: "block" }}>{img.label}</Typography>
+                        <Typography sx={{ fontWeight: "bold", fontSize: "18px" }}>{img.off}</Typography>
+                      </Box>
+                    )}
+                  </Box>
+                );
+              })}
+            </Stack>
+          </Box>
+
+          <Stack direction="row" spacing={1.5} justifyContent="center" sx={{ mt: 5 }}>
             {images.map((_, i) => (
-              <Box key={i} onClick={() => setActiveStep(i)} sx={{ 
-                width: "8px", height: "8px", borderRadius: "50%", cursor: "pointer",
-                bgcolor: i === activeStep ? "#000" : "#ccc" 
-              }} />
+              <Box key={i} onClick={() => setActiveStep(i)} sx={{ width: activeStep === i ? "12px" : "8px", height: activeStep === i ? "12px" : "8px", borderRadius: "50%", bgcolor: activeStep === i ? "#000" : "#D1D1D1", cursor: "pointer", transition: "0.3s" }} />
             ))}
           </Stack>
-        </Stack>
+        </Box>
       </Stack>
-    </Stack>
+    </Container>
   );
 }
 

@@ -108,8 +108,6 @@ function SubscribeSection() {
             </Box>
           </Stack>
         </Stack>
-
-        {/* Second Image (Right on Desktop, Bottom on Mobile) */}
         <Box sx={{ flex: 1, textAlign: "center", width: "100%" }}>
           <Box 
             component="img" 

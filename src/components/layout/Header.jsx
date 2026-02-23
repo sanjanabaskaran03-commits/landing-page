@@ -50,7 +50,7 @@ function Header() {
             </Stack>
           )}
 
-          <Stack direction="row" spacing={2} alignItems="center" color="#484848">
+          <Stack direction="row" spacing={0} alignItems="center" color="#484848">
             <SearchIcon />
 
             {isDesktop && (
