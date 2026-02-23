@@ -23,7 +23,7 @@ function PeakySection() {
       direction={{ xs: "column", md: "row" }}
       sx={{
         width: "100%",
-        mt: 10,
+        mt: {xs:2,md:10},
         bgcolor: { xs: "#D9D9D9", md: "#f3f3f3" },
         position: "relative",
         overflow: "hidden"
